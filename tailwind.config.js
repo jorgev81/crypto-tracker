@@ -4,8 +4,13 @@ export default {
     './src/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brandBlue: '#1E40AF',
+      },
+    },
   },
+  darkMode: 'media', 
   plugins: [],
 }
 

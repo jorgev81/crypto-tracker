@@ -6,6 +6,10 @@ const LiveClock: React.FC = () => {
     return new Date().toLocaleTimeString();
   });
 
+  const [currentDate, setCurrentDate] = useState<string>(
+    new Date().toLocaleDateString()
+  )
+
   useEffect(() => {
     const timerId = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
@@ -14,7 +18,7 @@ const LiveClock: React.FC = () => {
     return () => clearInterval(timerId); // Cleanup on unmount
   }, []);
 
-  return <div>{currentTime}</div>;
+  return <div>{currentDate} - {currentTime}</div>;
 };
 
 export default LiveClock;
