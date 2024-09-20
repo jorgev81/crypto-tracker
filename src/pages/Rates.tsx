@@ -1,8 +1,9 @@
-// Rates.tsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useGetRates } from '../hooks/useGetRates';
-import { RateInfo } from '../models/RateInfo';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useGetRates } from "../hooks/useGetRates";
+import { RateInfo } from "../models/RateInfo";
+import Search from "../components/Search";
+import Sort from "../components/Sort";
 
 interface CoinRate {
   symbol: string;
@@ -11,49 +12,84 @@ interface CoinRate {
 
 const Rates: React.FC = () => {
   const { data, error, loading } = useGetRates();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("symbol");
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return <div className="text-center py-10 text-white">Loading...</div>;
   }
 
   if (error || !data) {
     return (
-      <div className="text-center py-10 text-red-500">
+      <div className="text-center py-10 text-alert-danger">
         Error fetching rates: {error}
       </div>
     );
   }
 
-  // Extract rates relative to USD
   const usdRates: CoinRate[] = [];
 
   for (const baseCurrency in data) {
-    if (data[baseCurrency]['usd']) {
+    if (data[baseCurrency]["usd"]) {
       usdRates.push({
         symbol: baseCurrency.toUpperCase(),
-        rateInfo: data[baseCurrency]['usd'],
+        rateInfo: data[baseCurrency]["usd"],
       });
     }
   }
 
+  const filteredRates = usdRates.filter((coin) =>
+    coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const sortedRates = [...filteredRates].sort((a, b) => {
+    switch (sortOption) {
+      case "price":
+        return b.rateInfo.rate - a.rateInfo.rate;
+      case "change":
+        return b.rateInfo.diff24h - a.rateInfo.diff24h;
+      case "symbol":
+      default:
+        return a.symbol.localeCompare(b.symbol);
+    }
+  });
+
   return (
     <div className="py-10">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">
-        Cryptocurrency Rates Relative to USD
-      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <h2 className="text-4xl font-bold text-white mb-4 md:mb-0">
+          Cryptocurrency Rates Relative to USD
+        </h2>
+        <div className="flex flex-col gap-4 md:items-end">
+          <Sort sortOption={sortOption} setSortOption={setSortOption} />
+          <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        </div>
+      </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {usdRates.map((coin) => (
+        {sortedRates.map((coin) => (
           <Link
             to={`/rates/${coin.symbol.toLowerCase()}`}
             key={coin.symbol}
-            className="border border-gray-200 rounded-lg p-6 shadow hover:bg-transparent hover:shadow-lg transition-shadow duration-300 bg-[#f0f8ff]"
+            className="bg-neutral-medium border border-neutral-light rounded-lg p-6 shadow-lg hover:bg-transparent transition-shadow duration-300"
           >
-            <h3 className="text-2xl font-semibold mb-2">{coin.symbol}</h3>
-            <p className="text-xl text-gray-600 mb-4">
-              Price: ${coin.rateInfo.rate}
+            <h3 className="text-2xl font-semibold text-accent-orange mb-4">
+              {coin.symbol}
+            </h3>
+            <p className="text-neutral-light mb-2">
+              Price:{" "}
+              <span className="text-accent-green">${coin.rateInfo.rate}</span>
             </p>
-            <p className="text-gray-500">
-              24h Change: {coin.rateInfo.diff24h}%
+            <p className="text-neutral-light">
+              24h Change:{" "}
+              <span
+                className={
+                  coin.rateInfo.diff24h >= 0
+                    ? "text-accent-green"
+                    : "text-alert-danger"
+                }
+              >
+                {coin.rateInfo.diff24h}%
+              </span>
             </p>
           </Link>
         ))}

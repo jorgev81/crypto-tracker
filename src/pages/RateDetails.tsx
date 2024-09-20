@@ -13,12 +13,12 @@ const RateDetail: React.FC = () => {
   const { data, error, loading } = useGetRates();
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return <div className="text-center py-10 text-white">Loading...</div>;
   }
 
   if (error || !data) {
     return (
-      <div className="text-center py-10 text-red-500">
+      <div className="text-center py-10 text-alert-danger">
         Error fetching coin data: {error}
       </div>
     );
@@ -29,7 +29,7 @@ const RateDetail: React.FC = () => {
 
   if (!coinData || !coinData['usd']) {
     return (
-      <div className="text-center py-10 text-gray-500">
+      <div className="text-center py-10 text-neutral-light">
         Coin data not available for {id.toUpperCase()} relative to USD.
       </div>
     );
@@ -38,27 +38,41 @@ const RateDetail: React.FC = () => {
   const rateInfo: RateInfo = coinData['usd'];
 
   return (
-    <div className="py-10">
-      <h2 className="text-4xl font-bold text-gray-800 mb-6">
-        {id.toUpperCase()} to USD Rate Details
-      </h2>
-      <div className="space-y-4 text-gray-700">
-        <p className="text-xl">
-          <span className="font-semibold">Rate (Medium Price):</span>{' '}
-          ${rateInfo.rate}
-        </p>
-        <p className="text-xl">
-          <span className="font-semibold">Ask Price:</span>{' '}
-          ${rateInfo.ask}
-        </p>
-        <p className="text-xl">
-          <span className="font-semibold">Bid Price:</span>{' '}
-          ${rateInfo.bid}
-        </p>
-        <p className="text-xl">
-          <span className="font-semibold">24h Change:</span>{' '}
-          {rateInfo.diff24h}%
-        </p>
+    <div className="py-10 bg-neutral-dark">
+      <div className="container mx-auto w-1/2">
+        <div className="bg-neutral-medium border border-neutral-light rounded-lg p-8 shadow-lg">
+          <h2 className="text-5xl font-bold text-white mb-6">
+            {id.toUpperCase()} / USD
+          </h2>
+          <div className="space-y-6 text-neutral-light">
+            <p className="text-2xl">
+              <span className="font-semibold">Rate:</span>{' '}
+              <span className="text-accent-green">
+                ${rateInfo.rate.toFixed(6)}
+              </span>
+            </p>
+            <p className="text-2xl">
+              <span className="font-semibold">Ask Price:</span>{' '}
+              ${rateInfo.ask.toFixed(6)}
+            </p>
+            <p className="text-2xl">
+              <span className="font-semibold">Bid Price:</span>{' '}
+              ${rateInfo.bid.toFixed(6)}
+            </p>
+            <p className="text-2xl">
+              <span className="font-semibold">24h Change:</span>{' '}
+              <span
+                className={
+                  rateInfo.diff24h >= 0
+                    ? 'text-accent-green'
+                    : 'text-alert-danger'
+                }
+              >
+                {rateInfo.diff24h.toFixed(2)}%
+              </span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

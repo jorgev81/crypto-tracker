@@ -1,7 +1,6 @@
-// Home.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import heroBackground from '../assets/bitcoin.avif'; // Ensure the path is correct
+import heroBackground from '../assets/bitcoin.avif';
 
 const Home: React.FC = () => (
   <div className="relative bg-gray-900">
@@ -10,7 +9,6 @@ const Home: React.FC = () => (
       style={{ backgroundImage: `url(${heroBackground})` }}
     ></div>
 
-    {/* Overlay content */}
     <div className="relative container mx-auto px-4 py-32 text-center">
       <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6">
         Welcome to CryptoTracker!
@@ -21,7 +19,7 @@ const Home: React.FC = () => (
       <div className="flex justify-center space-x-4">
         <Link
           to="/rates"
-          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300"
+          className="inline-block bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300"
         >
           Explore Rates
         </Link>
@@ -29,7 +27,7 @@ const Home: React.FC = () => (
           href="https://en.wikipedia.org/wiki/Cryptocurrency"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-green-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-700 transition duration-300"
+          className="inline-block bg-green-800 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-700 transition duration-300"
         >
           What is Cryptocurrency?
         </a>
