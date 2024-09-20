@@ -15,12 +15,6 @@ export default function AxiosProvider({
     });
 
     axiosInstance.interceptors.request.use((config) => {
-      // Read token for anywhere, in this case directly from localStorage
-     /*  const token = localStorage.getItem('authToken'); */
-      /* if (token) {
-        config.headers[BACKEND_REQUEST_ACCESS_TOKEN] = `${token}`;
-      } */
-
       return config;
     },
     (error) => {
