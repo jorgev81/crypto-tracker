@@ -1,25 +1,22 @@
-import React from 'react';
-import './App.css'
-import ErrorBoundaries from './components/ErrorBoundaries';
-import AxiosProvider from './context/axiosContext';
-import { Router } from "react-router-dom";
-import Routes from './routes';
-import { history } from './helpers/common';
+import React from "react";
+import "./App.css";
+import ErrorBoundaries from "./components/ErrorBoundaries";
+import AxiosProvider from "./context/axiosContext";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes";
 
 function App() {
- // if (!Object.prototype.hasOwnProperty.call(new class { x: unknown }(), 'x')) throw new Error('Transpiler is not configured correctly');
-
   return (
     <AxiosProvider>
       <div className="App">
-        <Router history={history}>
+        <BrowserRouter>
           <ErrorBoundaries>
             <Routes />
           </ErrorBoundaries>
-        </Router>
+        </BrowserRouter>
       </div>
     </AxiosProvider>
-  )
+  );
 }
 
-export default App
+export default App;
