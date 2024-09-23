@@ -1,0 +1,18 @@
+# Node modules
+node_modules/
+apps/*/node_modules/
+
+# Environment variables
+.env
+
+# Build outputs
+dist/
+
+# Debug
+.idea/
+.vscode/
+.DS_Store
+
+# Temporary files
+temp/
+*.tmp
