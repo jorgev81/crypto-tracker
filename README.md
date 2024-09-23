@@ -1,50 +1,47 @@
-# React + TypeScript + Vite
+# Cryptocurrency Rates Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **React** and **TypeScript** application that displays a list of cryptocurrency rates relative to USD, with individual pages for each coin showing detailed information.
 
-Currently, two official plugins are available:
+## 🌐 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live application here: [Cryptocurrency Rates Tracker](https://crypto-tracker-sigma-lovat.vercel.app/)
 
-## Expanding the ESLint configuration
+## 📖 Table of Contents
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [Objective](#🎯-objective)
+- [Features](#✨-features)
+- [Technologies Used](#🛠️-technologies-used)
+- [License](#📄-license)
 
-- Configure the top-level `parserOptions` property like this:
+## 🎯 Objective
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Develop a single-page application using **React** and **TypeScript** that displays a list of cryptocurrency rates, fetching data from [YouHodler API](https://app.youhodler.com/api/v3/rates/extended). The rates are relative to the **USD**.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Each item in the list is a link leading to a dedicated page for each coin (e.g., `/btc`, `/eth`), displaying all the information available from the endpoint:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- `rate` - medium price
+- `ask` - ask price
+- `bid` - bid price
+- `diff24h` - 24-hour price movement
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## ✨ Features
+
+- **Display Rates**: View a comprehensive list of cryptocurrency rates relative to USD.
+- **Switch Views**: Toggle between table and card views for better visualization.
+- **Pagination**: Navigate through pages in the table view, displaying 20 items per page.
+- **Sorting and Filtering**: Sort coins by symbol, price, or 24-hour change, and search for specific coins.
+- **Coin Details**: Click on a coin to view detailed information on its dedicated page.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+
+🛠️ Technologies Used
+- **React**: Front-end library for building user interfaces.
+- **TypeScript**: Typed superset of JavaScript for type safety.
+- **MobX**: State management library for efficient state handling.
+- **Vite**: Build tool for rapid development and hot module replacement.
+- **Axios**: HTTP client for API requests.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **React Router**: Library for routing in React applications.
+- **Vercel**: Hosting platform for deploying the application.
+
+## Contributing
+Feel free to contribute to the development of this widget. Submit issues or pull requests to enhance its functionality or address any bugs.
