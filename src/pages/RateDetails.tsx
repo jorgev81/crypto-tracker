@@ -1,22 +1,22 @@
 // RateDetail.tsx
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetRates } from '../hooks/useGetRates';
-import { RateInfo } from '../models/RateInfo';
+import { observer } from 'mobx-react-lite';
+import ratesStore from '../store/RatesStore';
 
 interface RouteParams {
   id: string;
 }
 
-const RateDetail: React.FC = () => {
+const RateDetail: React.FC = observer(() => {
   const { id } = useParams<RouteParams>();
-  const { data, error, loading } = useGetRates();
+  const { rates, loading, error } = ratesStore;
 
   if (loading) {
     return <div className="text-center py-10 text-white">Loading...</div>;
   }
 
-  if (error || !data) {
+  if (error) {
     return (
       <div className="text-center py-10 text-alert-danger">
         Error fetching coin data: {error}
@@ -24,18 +24,18 @@ const RateDetail: React.FC = () => {
     );
   }
 
-  const coinSymbol = id.toLowerCase();
-  const coinData = data[coinSymbol];
+  const coinSymbol = id.toUpperCase();
+  const coin = rates.find((c) => c.symbol === coinSymbol);
 
-  if (!coinData || !coinData['usd']) {
+  if (!coin) {
     return (
       <div className="text-center py-10 text-neutral-light">
-        Coin data not available for {id.toUpperCase()} relative to USD.
+        Coin data not available for {coinSymbol} relative to USD.
       </div>
     );
   }
 
-  const rateInfo: RateInfo = coinData['usd'];
+  const { rateInfo } = coin;
 
   return (
     <div className="py-10 bg-neutral-dark">
@@ -76,6 +76,6 @@ const RateDetail: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default RateDetail;

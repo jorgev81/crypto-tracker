@@ -1,9 +1,7 @@
-
 import { makeAutoObservable, runInAction } from 'mobx';
-
-import axios from 'axios';
-import { RateInfo } from '../models/RateInfo';
 import { RatesResponse } from '../models/RatesResponse';
+import { RateInfo } from '../models/RateInfo';
+import axios from 'axios';
 
 export interface CoinRate {
   symbol: string;
@@ -16,9 +14,18 @@ class RatesStore {
   sortOption: string = 'symbol';
   loading: boolean = true;
   error: string = '';
+  viewType: 'table' | 'card' = 'table'; // Default to 'table'
+  currentPage: number = 1;
+  itemsPerPage: number = 20;
 
   constructor() {
     makeAutoObservable(this);
+    
+    const savedViewType = localStorage.getItem('viewType') as 'table' | 'card';
+    if (savedViewType) {
+      this.viewType = savedViewType;
+    }
+
     this.fetchRates();
   }
 
@@ -51,13 +58,25 @@ class RatesStore {
     }
   };
 
-  setSearchQuery(query: string) {
+  setSearchQuery = (query: string) => {
     this.searchQuery = query;
-  }
+    this.currentPage = 1; // Reset to first page when search query changes
+  };
 
-  setSortOption(option: string) {
+  setSortOption = (option: string) => {
     this.sortOption = option;
-  }
+    this.currentPage = 1; // Reset to first page when sort option changes
+  };
+
+  setViewType = (view: 'table' | 'card') => {
+    this.viewType = view;
+    localStorage.setItem('viewType', view);
+  };
+
+  
+  setCurrentPage = (page: number) => {
+    this.currentPage = page;
+  };
 
   get filteredRates() {
     return this.rates.filter((coin) =>
@@ -80,6 +99,12 @@ class RatesStore {
         break;
     }
     return sorted;
+  }
+
+  get paginatedRates() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.sortedRates.slice(startIndex, endIndex);
   }
 }
 
