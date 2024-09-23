@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { RatesResponse } from '../models/RatesResponse';
 import { RateInfo } from '../models/RateInfo';
-import axios from 'axios';
+import axiosInstance from '../context/axiosInstance';
 
 export interface CoinRate {
   symbol: string;
@@ -9,6 +9,7 @@ export interface CoinRate {
 }
 
 class RatesStore {
+
   rates: CoinRate[] = [];
   searchQuery: string = '';
   sortOption: string = 'symbol';
@@ -20,7 +21,8 @@ class RatesStore {
 
   constructor() {
     makeAutoObservable(this);
-    
+
+  
     const savedViewType = localStorage.getItem('viewType') as 'table' | 'card';
     if (savedViewType) {
       this.viewType = savedViewType;
@@ -31,7 +33,7 @@ class RatesStore {
 
   fetchRates = async () => {
     try {
-      const response = await axios.get<RatesResponse>(
+      const response = await axiosInstance.get<RatesResponse>(
         'https://app.youhodler.com/api/v3/rates/extended'
       );
       runInAction(() => {
