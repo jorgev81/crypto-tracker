@@ -10,7 +10,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col bg-neutral-dark min-h-screen pretty-scrollbar">
       <Header />
-      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow">
         {children}
       </main>
       <Footer />
