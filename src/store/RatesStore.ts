@@ -22,7 +22,6 @@ class RatesStore {
   constructor() {
     makeAutoObservable(this);
 
-  
     const savedViewType = localStorage.getItem('viewType') as 'table' | 'card';
     if (savedViewType) {
       this.viewType = savedViewType;
@@ -37,7 +36,6 @@ class RatesStore {
         'https://app.youhodler.com/api/v3/rates/extended'
       );
       runInAction(() => {
-        // Extract rates relative to USD
         const usdRates: CoinRate[] = [];
 
         for (const baseCurrency in response.data) {

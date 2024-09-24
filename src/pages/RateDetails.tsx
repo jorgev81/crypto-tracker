@@ -42,22 +42,22 @@ const RateDetail: React.FC = observer(() => {
       <div className="container mx-auto w-1/2">
         <div className="bg-neutral-medium border border-neutral-light rounded-lg p-8 shadow-lg">
           <h2 className="text-5xl font-bold text-white mb-6">
-            {id.toUpperCase()} / USD
+            {id.toUpperCase()}
           </h2>
           <div className="space-y-6 text-neutral-light">
             <p className="text-2xl">
               <span className="font-semibold">Rate:</span>{' '}
               <span className="text-accent-green">
-                ${rateInfo.rate.toFixed(6)}
+                ${rateInfo.rate.toFixed(2)}
               </span>
             </p>
             <p className="text-2xl">
               <span className="font-semibold">Ask Price:</span>{' '}
-              ${rateInfo.ask.toFixed(6)}
+              ${rateInfo.ask.toFixed(2)}
             </p>
             <p className="text-2xl">
               <span className="font-semibold">Bid Price:</span>{' '}
-              ${rateInfo.bid.toFixed(6)}
+              ${rateInfo.bid.toFixed(2)}
             </p>
             <p className="text-2xl">
               <span className="font-semibold">24h Change:</span>{' '}

@@ -1,12 +1,12 @@
 import React, { Component, ReactNode } from 'react';
 
-type MyProps = {
+type ErrorBoundariesProps = {
   children?: ReactNode;
 };
-type MyState = { hasError: boolean };
+type ErrorState = { hasError: boolean };
 
-export class ErrorBoundaries extends Component<MyProps, MyState> {
-  constructor(props: MyProps | Readonly<MyProps>) {
+export class ErrorBoundaries extends Component<ErrorBoundariesProps, ErrorState> {
+  constructor(props: ErrorBoundariesProps | Readonly<ErrorBoundariesProps>) {
     super(props);
   }
 
@@ -14,11 +14,9 @@ export class ErrorBoundaries extends Component<MyProps, MyState> {
 
   render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
       return (
         <div
-          className="text-secondary d-flex flex-column align-items-center justify-content-center"
-          style={{ height: '100vh' }}
+          className="text-secondary d-flex flex-column align-items-center justify-content-center h-lvh"
         >
           <h1>Something went wrong.</h1>
           <p className="text-secondary">Try refreshing the page, or try again later</p>

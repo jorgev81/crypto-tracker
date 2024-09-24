@@ -5,10 +5,10 @@ import Search from "../components/Search";
 import Sort from "../components/Sort";
 import RatesTable from "../components/RatesTable";
 import CoinCard from "../components/CoinCard/CoinCard";
+import Pagination from "../components/Pagination/Pagination";
 
 const Rates: React.FC = observer(() => {
   const {
-    sortedRates,
     paginatedRates,
     loading,
     error,
@@ -18,7 +18,13 @@ const Rates: React.FC = observer(() => {
     setSortOption,
     viewType,
     setViewType,
+    currentPage,
+    setCurrentPage,
   } = ratesStore;
+
+  const totalPages = Math.ceil(
+    ratesStore.sortedRates.length / ratesStore.itemsPerPage
+  );
 
   if (loading) {
     return <div className="text-center py-10 text-white">Loading...</div>;
@@ -68,11 +74,17 @@ const Rates: React.FC = observer(() => {
           <RatesTable rates={paginatedRates} />
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {sortedRates.map((coin) => (
-              <CoinCard key={coin.symbol} coin={coin}/>
+            {paginatedRates.map((coin) => (
+              <CoinCard key={coin.symbol} coin={coin} />
             ))}
           </div>
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

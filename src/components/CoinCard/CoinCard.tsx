@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { CoinRate } from '../../store/RatesStore';
+import React from "react";
+import { Link } from "react-router-dom";
+import { CoinRate } from "../../store/RatesStore";
 
 interface CoinCardProps {
   coin: CoinRate;
@@ -16,21 +16,21 @@ const CoinCard: React.FC<CoinCardProps> = ({ coin }) => {
         {coin.symbol}
       </h3>
       <p className="text-neutral-light mb-2">
-        Price:{' '}
+        Price:{" "}
         <span className="text-accent-green">
-          ${coin.rateInfo.rate}
+          ${Number(coin.rateInfo.rate).toFixed(2)}
         </span>
       </p>
       <p className="text-neutral-light">
-        24h Change:{' '}
+        24h Change:{" "}
         <span
           className={
             coin.rateInfo.diff24h >= 0
-              ? 'text-accent-green'
-              : 'text-alert-danger'
+              ? "text-accent-green"
+              : "text-alert-danger"
           }
         >
-          {coin.rateInfo.diff24h}%
+          {Number(coin.rateInfo.diff24h).toFixed(2)}%
         </span>
       </p>
     </Link>

@@ -9,7 +9,10 @@ const Header: React.FC = () => (
         CryptoTracker
       </Link>
       <nav className="flex items-center space-x-6">
-        <Link to="/rates" className="hover:text-gray-200">
+        <Link
+          to="/rates"
+          className="text-gray-100 px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors duration-300"
+        >
           Rates
         </Link>
         <LiveClock />
